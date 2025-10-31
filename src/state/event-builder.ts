@@ -21,7 +21,10 @@ export const EVENT_TRIGGER_BY_EVENT: Record<
   ReadonlyArray<TEventTrigger>
 > = {
   [CArtifactEvent.DRAFT]: [CEventTrigger.ARTIFACT_CREATED],
-  [CArtifactEvent.READY]: [CEventTrigger.DEPENDENCIES_MET],
+  [CArtifactEvent.READY]: [
+    CEventTrigger.DEPENDENCIES_MET,
+    CEventTrigger.DEPENDENCY_COMPLETED,
+  ],
   [CArtifactEvent.BLOCKED]: [CEventTrigger.HAS_DEPENDENCIES],
   [CArtifactEvent.IN_PROGRESS]: [
     CEventTrigger.BRANCH_CREATED,

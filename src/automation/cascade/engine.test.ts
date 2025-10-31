@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
   CArtifactEvent,
@@ -8,6 +8,7 @@ import {
   type TArtifactEvent,
   type TEventTrigger,
 } from "../../constants.js";
+import { createEvent } from "../../state/event-builder.js";
 import { type CascadeChild, CascadeEngine } from "./engine.js";
 
 const BASE_ACTOR = "Jane Doe (jane@example.com)";
@@ -51,6 +52,105 @@ function sequence(
 }
 
 const engine = new CascadeEngine();
+
+describe("CascadeEngine.generateCascadeEvent", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2025-10-31T19:00:00Z"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("builds an in_progress cascade event with trigger context", () => {
+    const trigger = createEvent({
+      event: CArtifactEvent.IN_PROGRESS,
+      actor: "Alice Doe (alice@example.com)",
+      trigger: CEventTrigger.BRANCH_CREATED,
+      timestamp: "2025-10-31T18:45:00Z",
+    });
+
+    const cascade = engine.generateCascadeEvent(
+      CArtifactEvent.IN_PROGRESS,
+      trigger,
+      "child_started",
+    );
+
+    expect(cascade.event).toBe(CArtifactEvent.IN_PROGRESS);
+    expect(cascade.trigger).toBe(CEventTrigger.CHILDREN_STARTED);
+    expect(cascade.actor).toBe("System Cascade (cascade@completion)");
+    expect(cascade.timestamp).toBe("2025-10-31T19:00:00Z");
+    expect(cascade.metadata).toEqual({
+      cascade_type: "child_started",
+      trigger_event: trigger.event,
+      trigger_actor: trigger.actor,
+      trigger_timestamp: trigger.timestamp,
+    });
+  });
+
+  it("builds an in_review cascade event using children_completed trigger", () => {
+    const trigger = createEvent({
+      event: CArtifactEvent.COMPLETED,
+      actor: "Bob Smith (bob@example.com)",
+      trigger: CEventTrigger.PR_MERGED,
+      timestamp: "2025-10-31T19:05:00Z",
+    });
+
+    const cascade = engine.generateCascadeEvent(
+      CArtifactEvent.IN_REVIEW,
+      trigger,
+      "all_children_complete",
+    );
+
+    expect(cascade.event).toBe(CArtifactEvent.IN_REVIEW);
+    expect(cascade.trigger).toBe(CEventTrigger.CHILDREN_COMPLETED);
+    expect(cascade.actor).toBe("System Cascade (cascade@completion)");
+    expect(cascade.metadata).toEqual({
+      cascade_type: "all_children_complete",
+      trigger_event: trigger.event,
+      trigger_actor: trigger.actor,
+      trigger_timestamp: trigger.timestamp,
+    });
+  });
+
+  it("throws when cascade state is unsupported", () => {
+    const trigger = createEvent({
+      event: CArtifactEvent.COMPLETED,
+      actor: "Bob Smith (bob@example.com)",
+      trigger: CEventTrigger.PR_MERGED,
+      timestamp: "2025-10-31T19:05:00Z",
+    });
+
+    expect(() =>
+      engine.generateCascadeEvent(CArtifactEvent.CANCELLED, trigger, "invalid"),
+    ).toThrow(/unsupported cascade event/i);
+  });
+
+  it("builds an archived cascade event with parent_archived trigger", () => {
+    const trigger = createEvent({
+      event: CArtifactEvent.CANCELLED,
+      actor: "Parent Owner (owner@example.com)",
+      trigger: CEventTrigger.MANUAL_CANCEL,
+      timestamp: "2025-10-31T18:30:00Z",
+    });
+
+    const cascade = engine.generateCascadeEvent(
+      CArtifactEvent.ARCHIVED,
+      trigger,
+      "parent_archived",
+    );
+
+    expect(cascade.event).toBe(CArtifactEvent.ARCHIVED);
+    expect(cascade.trigger).toBe(CEventTrigger.PARENT_ARCHIVED);
+    expect(cascade.metadata).toEqual({
+      cascade_type: "parent_archived",
+      trigger_event: trigger.event,
+      trigger_actor: trigger.actor,
+      trigger_timestamp: trigger.timestamp,
+    });
+  });
+});
 
 describe("CascadeEngine.shouldCascadeToParent", () => {
   it("returns in_review when all active children are completed", () => {
