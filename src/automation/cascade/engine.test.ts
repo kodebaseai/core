@@ -138,13 +138,37 @@ describe("CascadeEngine.generateCascadeEvent", () => {
     const cascade = engine.generateCascadeEvent(
       CArtifactEvent.ARCHIVED,
       trigger,
-      "parent_archived",
+      "parent_cancel_archive",
     );
 
     expect(cascade.event).toBe(CArtifactEvent.ARCHIVED);
     expect(cascade.trigger).toBe(CEventTrigger.PARENT_ARCHIVED);
     expect(cascade.metadata).toEqual({
-      cascade_type: "parent_archived",
+      cascade_type: "parent_cancel_archive",
+      trigger_event: trigger.event,
+      trigger_actor: trigger.actor,
+      trigger_timestamp: trigger.timestamp,
+    });
+  });
+
+  it("builds an archived cascade event with parent_completed trigger", () => {
+    const trigger = createEvent({
+      event: CArtifactEvent.COMPLETED,
+      actor: "Parent Owner (owner@example.com)",
+      trigger: CEventTrigger.PR_MERGED,
+      timestamp: "2025-10-31T20:00:00Z",
+    });
+
+    const cascade = engine.generateCascadeEvent(
+      CArtifactEvent.ARCHIVED,
+      trigger,
+      "parent_completion_archive",
+    );
+
+    expect(cascade.event).toBe(CArtifactEvent.ARCHIVED);
+    expect(cascade.trigger).toBe(CEventTrigger.PARENT_COMPLETED);
+    expect(cascade.metadata).toEqual({
+      cascade_type: "parent_completion_archive",
       trigger_event: trigger.event,
       trigger_actor: trigger.actor,
       trigger_timestamp: trigger.timestamp,
@@ -153,6 +177,21 @@ describe("CascadeEngine.generateCascadeEvent", () => {
 });
 
 describe("CascadeEngine.shouldCascadeToParent", () => {
+  it("does not mutate child event histories", () => {
+    const child = buildChild([
+      sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+      sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+    ]);
+
+    const snapshot = child.metadata.events.map((event) =>
+      structuredClone(event),
+    );
+
+    engine.shouldCascadeToParent([child], CArtifactEvent.READY);
+
+    expect(child.metadata.events).toEqual(snapshot);
+  });
+
   it("moves a milestone parent to in_progress when first issue starts", () => {
     const issues: CascadeChild[] = [
       buildChild([

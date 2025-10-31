@@ -16,8 +16,25 @@ const CASCADE_TRIGGER_BY_EVENT: Partial<Record<TArtifactEvent, TEventTrigger>> =
     [CArtifactEvent.READY]: CEventTrigger.DEPENDENCY_COMPLETED,
     [CArtifactEvent.IN_PROGRESS]: CEventTrigger.CHILDREN_STARTED,
     [CArtifactEvent.IN_REVIEW]: CEventTrigger.CHILDREN_COMPLETED,
-    [CArtifactEvent.ARCHIVED]: CEventTrigger.PARENT_ARCHIVED,
   };
+
+const ARCHIVAL_TRIGGER_BY_TYPE: Record<string, TEventTrigger> = {
+  parent_completion_archive: CEventTrigger.PARENT_COMPLETED,
+  parent_cancel_archive: CEventTrigger.PARENT_ARCHIVED,
+  parent_archived: CEventTrigger.PARENT_ARCHIVED,
+};
+
+function resolveCascadeTrigger(
+  newState: TArtifactEvent,
+  cascadeType: string,
+): TEventTrigger | undefined {
+  if (newState === CArtifactEvent.ARCHIVED) {
+    return (
+      ARCHIVAL_TRIGGER_BY_TYPE[cascadeType] ?? CEventTrigger.PARENT_ARCHIVED
+    );
+  }
+  return CASCADE_TRIGGER_BY_EVENT[newState];
+}
 
 export type CascadeChild = Pick<TInitiative | TMilestone | TIssue, "metadata">;
 
@@ -80,9 +97,12 @@ export class CascadeEngine {
     triggerEvent: Pick<TEventRecord, "event" | "actor" | "timestamp">,
     cascadeType: string,
   ): TEventRecord {
-    const trigger = CASCADE_TRIGGER_BY_EVENT[newState];
+    const trigger = resolveCascadeTrigger(newState, cascadeType);
     if (!trigger) {
-      const supported = Object.keys(CASCADE_TRIGGER_BY_EVENT).join(", ");
+      const supported = [
+        ...Object.keys(CASCADE_TRIGGER_BY_EVENT),
+        CArtifactEvent.ARCHIVED,
+      ].join(", ");
       throw new Error(
         `Unsupported cascade event '${newState}'. Supported: ${supported}`,
       );
