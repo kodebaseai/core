@@ -1,5 +1,6 @@
 export * from "./automation/cascade/engine.js";
 export * from "./constants.js";
+export * from "./loading/artifact-file-service.js";
 export * from "./loading/artifact-loader.js";
 export * from "./loading/artifact-paths.js";
 export * from "./parser/artifact-parser.js";
