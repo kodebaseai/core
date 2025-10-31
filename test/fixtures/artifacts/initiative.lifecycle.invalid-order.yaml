@@ -1,0 +1,27 @@
+metadata:
+  title: "Initiative: Invalid chronology order"
+  priority: high
+  estimation: L
+  created_by: "Ada Lovelace (ada@example.com)"
+  assignee: "Grace Hopper (grace@example.com)"
+  schema_version: "0.0.1"
+  relationships:
+    blocks: []
+    blocked_by: []
+  events:
+    - event: draft
+      timestamp: "2025-10-31T13:10:00Z"
+      actor: "Ada Lovelace (ada@example.com)"
+      trigger: artifact_created
+    - event: ready
+      timestamp: "2025-10-31T13:05:00Z" # earlier than previous; invalid order
+      actor: "agent.system"
+      trigger: dependencies_met
+content:
+  vision: "Demonstrate out-of-order event timestamps"
+  scope:
+    in: ["Schema alignment"]
+    out: ["Legacy formats"]
+  success_criteria:
+    - "Ordering validation detects out-of-order events"
+

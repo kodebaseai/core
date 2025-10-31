@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "title": "Milestone: Parser Rollout",
+    "priority": "medium",
+    "estimation": "M",
+    "created_by": "Ada Lovelace (ada@example.com)",
+    "assignee": "Grace Hopper (grace@example.com)",
+    "schema_version": "0.0.1",
+    "relationships": {
+      "blocks": [],
+      "blocked_by": []
+    },
+    "events": [
+      {
+        "event": "draft",
+        "timestamp": "2025-10-30T14:37:00Z",
+        "actor": "Ada Lovelace (ada@example.com)",
+        "trigger": "artifact_created"
+      }
+    ]
+  },
+  "content": {
+    "summary": "Deliver parser and validator fixtures.",
+    "deliverables": ["Parser fixture coverage", "Validator integration tests"],
+    "validation": ["CI passes with fixtures", "Golden errors remain stable"]
+  },
+  "delivery_summary": {
+    "outcome": "Parser fixtures adopted",
+    "delivered": ["YAML fixtures", "Golden error outputs"],
+    "deviations": ["Deferred CLI wiring"],
+    "next": "Automate downstream adoption",
+    "risks": ["Fixture drift without review"]
+  }
+}

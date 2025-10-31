@@ -1,0 +1,11 @@
+{
+  "kind": "schema",
+  "message": "Issue artifact validation failed (1 issue)",
+  "issues": [
+    {
+      "code": "too_small",
+      "path": "content.acceptance_criteria",
+      "message": "At least one item is required"
+    }
+  ]
+}

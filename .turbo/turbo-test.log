@@ -1,0 +1,62 @@
+
+> @kodebase/core@0.1.1 test /home/runner/work/kodebase/kodebase/packages/core
+> vitest run --coverage
+
+[33mLoaded [7m[33m vitest@4.0.5 [33m[27m and [7m[33m @vitest/coverage-istanbul@3.2.4 [33m[27m.
+Running mixed versions is not supported and may lead into bugs
+Update your dependencies and make sure the versions match.[39m
+
+[1m[46m RUN [49m[22m [36mv4.0.5 [39m[90m/home/runner/work/kodebase/kodebase/packages/core[39m
+      [2mCoverage enabled with [22m[33mistanbul[39m
+
+ [32m✓[39m src/validator/artifact-validator.test.ts [2m([22m[2m34 tests[22m[2m)[22m[32m 75[2mms[22m[39m
+ [32m✓[39m src/validator/error-formatter.test.ts [2m([22m[2m29 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m src/parser/artifact-parser.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m src/validator/dependency-validator.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/metadata-registry.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/state/event-builder.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/state/state-machine.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/schemas/schemas.compose.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/initiative-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/issue-registry.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/validator/artifact-validator.fixtures.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/milestone-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/shared-registry.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/parser/artifact-parser.fixtures.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m src/state/event-order.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m src/state/event-order.fixtures.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m src/constants.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m17 passed[39m[22m[90m (17)[39m
+[2m      Tests [22m [1m[32m180 passed[39m[22m[90m (180)[39m
+[2m   Start at [22m 17:31:54
+[2m   Duration [22m 5.76s[2m (transform 1.65s, setup 0ms, collect 2.78s, tests 305ms, environment 3ms, prepare 171ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mistanbul[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   98.23 |    89.56 |     100 |   98.86 |                   
+ src               |     100 |      100 |     100 |     100 |                   
+  constants.ts     |     100 |      100 |     100 |     100 |                   
+ src/parser        |     100 |      100 |     100 |     100 |                   
+  ...act-parser.ts |     100 |      100 |     100 |     100 |                   
+ src/schemas       |     100 |      100 |     100 |     100 |                   
+  schemas.ts       |     100 |      100 |     100 |     100 |                   
+ ...mas/registries |     100 |      100 |     100 |     100 |                   
+  ...e-registry.ts |     100 |      100 |     100 |     100 |                   
+  ...e-registry.ts |     100 |      100 |     100 |     100 |                   
+  ...a-registry.ts |     100 |      100 |     100 |     100 |                   
+  ...e-registry.ts |     100 |      100 |     100 |     100 |                   
+  ...d-registry.ts |     100 |      100 |     100 |     100 |                   
+ src/state         |   92.94 |    84.74 |     100 |   97.46 |                   
+  event-builder.ts |   96.77 |    96.55 |     100 |     100 | 47                
+  event-order.ts   |    91.3 |     87.5 |     100 |    90.9 | 64,71             
+  state-machine.ts |   90.32 |    57.14 |     100 |     100 | 103-120,137       
+ src/test-utils    |     100 |      100 |     100 |     100 |                   
+  load-fixture.ts  |     100 |      100 |     100 |     100 |                   
+ src/validator     |   98.53 |    88.67 |     100 |   98.52 |                   
+  ...-validator.ts |   99.24 |    94.44 |     100 |   99.23 | 406               
+  ...-validator.ts |   95.83 |    93.18 |     100 |   95.83 | 194,213,252-257   
+  ...-formatter.ts |     100 |    84.28 |     100 |     100 | ...54-263,305-310 
+-------------------|---------|----------|---------|---------|-------------------

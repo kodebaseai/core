@@ -1,0 +1,112 @@
+{
+  "A": {
+    "metadata": {
+      "title": "Initiative A",
+      "priority": "medium",
+      "estimation": "S",
+      "created_by": "Tester (tester@example.com)",
+      "assignee": "Tester (tester@example.com)",
+      "schema_version": "0.0.1",
+      "relationships": {
+        "blocks": [],
+        "blocked_by": []
+      },
+      "events": [
+        {
+          "event": "draft",
+          "timestamp": "2025-01-01T00:00:00Z",
+          "actor": "Tester (tester@example.com)",
+          "trigger": "artifact_created"
+        }
+      ]
+    }
+  },
+  "A.1": {
+    "metadata": {
+      "title": "Milestone A.1",
+      "priority": "medium",
+      "estimation": "S",
+      "created_by": "Tester (tester@example.com)",
+      "assignee": "Tester (tester@example.com)",
+      "schema_version": "0.0.1",
+      "relationships": {
+        "blocks": [],
+        "blocked_by": ["A.2"]
+      },
+      "events": [
+        {
+          "event": "draft",
+          "timestamp": "2025-01-01T00:00:00Z",
+          "actor": "Tester (tester@example.com)",
+          "trigger": "artifact_created"
+        }
+      ]
+    }
+  },
+  "A.2": {
+    "metadata": {
+      "title": "Milestone A.2",
+      "priority": "medium",
+      "estimation": "S",
+      "created_by": "Tester (tester@example.com)",
+      "assignee": "Tester (tester@example.com)",
+      "schema_version": "0.0.1",
+      "relationships": {
+        "blocks": [],
+        "blocked_by": []
+      },
+      "events": [
+        {
+          "event": "draft",
+          "timestamp": "2025-01-01T00:00:00Z",
+          "actor": "Tester (tester@example.com)",
+          "trigger": "artifact_created"
+        }
+      ]
+    }
+  },
+  "A.1.1": {
+    "metadata": {
+      "title": "Issue A.1.1",
+      "priority": "medium",
+      "estimation": "S",
+      "created_by": "Tester (tester@example.com)",
+      "assignee": "Tester (tester@example.com)",
+      "schema_version": "0.0.1",
+      "relationships": {
+        "blocks": [],
+        "blocked_by": ["A.1.2"]
+      },
+      "events": [
+        {
+          "event": "draft",
+          "timestamp": "2025-01-01T00:00:00Z",
+          "actor": "Tester (tester@example.com)",
+          "trigger": "artifact_created"
+        }
+      ]
+    }
+  },
+  "A.1.2": {
+    "metadata": {
+      "title": "Issue A.1.2",
+      "priority": "medium",
+      "estimation": "S",
+      "created_by": "Tester (tester@example.com)",
+      "assignee": "Tester (tester@example.com)",
+      "schema_version": "0.0.1",
+      "relationships": {
+        "blocks": [],
+        "blocked_by": []
+      },
+      "events": [
+        {
+          "event": "draft",
+          "timestamp": "2025-01-01T00:00:00Z",
+          "actor": "Tester (tester@example.com)",
+          "trigger": "artifact_created"
+        }
+      ]
+    }
+  }
+}

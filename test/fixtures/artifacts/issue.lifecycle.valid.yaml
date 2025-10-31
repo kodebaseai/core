@@ -1,0 +1,39 @@
+metadata:
+  title: "Issue: Full lifecycle valid sequence"
+  priority: high
+  estimation: S
+  created_by: "Ada Lovelace (ada@example.com)"
+  assignee: "Grace Hopper (grace@example.com)"
+  schema_version: "0.0.1"
+  relationships:
+    blocks: []
+    blocked_by: []
+  events:
+    - event: draft
+      timestamp: "2025-10-30T14:00:00Z"
+      actor: "Ada Lovelace (ada@example.com)"
+      trigger: artifact_created
+    - event: ready
+      timestamp: "2025-10-30T14:05:00Z"
+      actor: "agent.system"
+      trigger: dependencies_met
+    - event: in_progress
+      timestamp: "2025-10-30T14:10:00Z"
+      actor: "Ada Lovelace (ada@example.com)"
+      trigger: branch_created
+    - event: in_review
+      timestamp: "2025-10-30T14:30:00Z"
+      actor: "Ada Lovelace (ada@example.com)"
+      trigger: pr_ready
+    - event: completed
+      timestamp: "2025-10-30T14:45:00Z"
+      actor: "agent.system"
+      trigger: pr_merged
+content:
+  summary: "Lifecycle validation fixture for issue"
+  acceptance_criteria:
+    - "Valid chronological sequence"
+    - "Triggers match expected events"
+implementation_notes:
+  result: "Fixture demonstrates end-to-end flow"
+

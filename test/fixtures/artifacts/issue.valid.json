@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "title": "Issue: Add parser fixtures",
+    "priority": "high",
+    "estimation": "S",
+    "created_by": "Ada Lovelace (ada@example.com)",
+    "assignee": "Grace Hopper (grace@example.com)",
+    "schema_version": "0.0.1",
+    "relationships": {
+      "blocks": [],
+      "blocked_by": []
+    },
+    "events": [
+      {
+        "event": "draft",
+        "timestamp": "2025-10-30T14:37:00Z",
+        "actor": "Ada Lovelace (ada@example.com)",
+        "trigger": "artifact_created"
+      }
+    ]
+  },
+  "content": {
+    "summary": "Add golden fixtures for parser and validator.",
+    "acceptance_criteria": [
+      "Fixtures load cleanly in tests",
+      "Invalid fixtures produce expected errors"
+    ]
+  },
+  "implementation_notes": {
+    "result": "Fixture suite initialised"
+  }
+}

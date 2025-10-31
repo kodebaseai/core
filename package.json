@@ -1,0 +1,33 @@
+{
+  "name": "@kodebase/core",
+  "version": "0.1.1",
+  "description": "Core TypeScript utilities for Kodebase v1",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    }
+  },
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'no build step'",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome lint .",
+    "format": "biome format .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "yaml": "^2.6.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@kodebase/typescript-config": "workspace:*",
+    "@vitest/coverage-istanbul": "^3.0.7",
+    "@types/node": "^22.5.1"
+  }
+}
