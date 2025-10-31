@@ -153,6 +153,122 @@ describe("CascadeEngine.generateCascadeEvent", () => {
 });
 
 describe("CascadeEngine.shouldCascadeToParent", () => {
+  it("moves a milestone parent to in_progress when first issue starts", () => {
+    const issues: CascadeChild[] = [
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+      ]),
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+        sequence(CArtifactEvent.IN_PROGRESS, CEventTrigger.BRANCH_CREATED),
+      ]),
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+      ]),
+    ];
+
+    const milestoneState = CArtifactEvent.READY;
+
+    const result = engine.shouldCascadeToParent(issues, milestoneState);
+
+    expect(result.shouldCascade).toBe(true);
+    if (!result.shouldCascade) {
+      throw new Error("expected cascade to milestone parent");
+    }
+    expect(result.newState).toBe(CArtifactEvent.IN_PROGRESS);
+    expect(result.reason).toBe("First active child progressed");
+  });
+
+  it("moves a milestone parent to in_review when all active issues complete", () => {
+    const issues: CascadeChild[] = [
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+        sequence(CArtifactEvent.IN_PROGRESS, CEventTrigger.BRANCH_CREATED),
+        sequence(CArtifactEvent.IN_REVIEW, CEventTrigger.PR_READY),
+        sequence(CArtifactEvent.COMPLETED, CEventTrigger.PR_MERGED),
+      ]),
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+        sequence(CArtifactEvent.IN_PROGRESS, CEventTrigger.BRANCH_CREATED),
+        sequence(CArtifactEvent.IN_REVIEW, CEventTrigger.PR_READY),
+        sequence(CArtifactEvent.COMPLETED, CEventTrigger.PR_MERGED),
+      ]),
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.CANCELLED, CEventTrigger.MANUAL_CANCEL),
+      ]),
+    ];
+
+    const milestoneState = CArtifactEvent.IN_PROGRESS;
+
+    const result = engine.shouldCascadeToParent(issues, milestoneState);
+
+    expect(result.shouldCascade).toBe(true);
+    if (!result.shouldCascade) {
+      throw new Error("expected cascade to milestone parent");
+    }
+    expect(result.newState).toBe(CArtifactEvent.IN_REVIEW);
+    expect(result.reason).toBe("All active children completed");
+  });
+
+  it("keeps milestone parent in_progress when additional issues start", () => {
+    const issues: CascadeChild[] = [
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+        sequence(CArtifactEvent.IN_PROGRESS, CEventTrigger.BRANCH_CREATED),
+      ]),
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+        sequence(CArtifactEvent.IN_PROGRESS, CEventTrigger.BRANCH_CREATED),
+      ]),
+    ];
+
+    const result = engine.shouldCascadeToParent(
+      issues,
+      CArtifactEvent.IN_PROGRESS,
+    );
+
+    expect(result.shouldCascade).toBe(false);
+    expect(result.reason).toBe("2 active children incomplete");
+  });
+
+  it("moves an initiative parent to in_review when all milestones complete", () => {
+    const milestones: CascadeChild[] = [
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+        sequence(CArtifactEvent.IN_PROGRESS, CEventTrigger.BRANCH_CREATED),
+        sequence(CArtifactEvent.IN_REVIEW, CEventTrigger.CHILDREN_STARTED),
+        sequence(CArtifactEvent.COMPLETED, CEventTrigger.PR_MERGED),
+      ]),
+      buildChild([
+        sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+        sequence(CArtifactEvent.READY, CEventTrigger.DEPENDENCIES_MET),
+        sequence(CArtifactEvent.IN_PROGRESS, CEventTrigger.BRANCH_CREATED),
+        sequence(CArtifactEvent.IN_REVIEW, CEventTrigger.PR_READY),
+        sequence(CArtifactEvent.COMPLETED, CEventTrigger.PR_MERGED),
+      ]),
+    ];
+
+    const initiativeState = CArtifactEvent.IN_PROGRESS;
+
+    const result = engine.shouldCascadeToParent(milestones, initiativeState);
+
+    expect(result.shouldCascade).toBe(true);
+    if (!result.shouldCascade) {
+      throw new Error("expected cascade to initiative parent");
+    }
+    expect(result.newState).toBe(CArtifactEvent.IN_REVIEW);
+    expect(result.reason).toBe("All active children completed");
+  });
+
   it("returns in_review when all active children are completed", () => {
     const children: CascadeChild[] = [
       buildChild([
