@@ -9,39 +9,42 @@ Update your dependencies and make sure the versions match.[39m
 [1m[46m RUN [49m[22m [36mv4.0.5 [39m[90m/home/runner/work/kodebase/kodebase/packages/core[39m
       [2mCoverage enabled with [22m[33mistanbul[39m
 
- [32m✓[39m src/automation/cascade/engine.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 44[2mms[22m[39m
- [32m✓[39m src/validator/artifact-validator.test.ts [2m([22m[2m34 tests[22m[2m)[22m[32m 55[2mms[22m[39m
- [32m✓[39m src/validator/error-formatter.test.ts [2m([22m[2m29 tests[22m[2m)[22m[32m 24[2mms[22m[39m
- [32m✓[39m src/parser/artifact-parser.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 42[2mms[22m[39m
- [32m✓[39m src/validator/dependency-validator.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 16[2mms[22m[39m
- [32m✓[39m src/schemas/registries/metadata-registry.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m src/automation/cascade/engine.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m src/validator/artifact-validator.test.ts [2m([22m[2m34 tests[22m[2m)[22m[32m 53[2mms[22m[39m
+ [32m✓[39m src/validator/error-formatter.test.ts [2m([22m[2m29 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m src/parser/artifact-parser.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 46[2mms[22m[39m
+ [32m✓[39m src/validator/dependency-validator.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/metadata-registry.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 15[2mms[22m[39m
  [32m✓[39m src/state/event-builder.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 11[2mms[22m[39m
- [32m✓[39m src/state/state-machine.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
- [32m✓[39m src/schemas/schemas.compose.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
- [32m✓[39m src/schemas/registries/initiative-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 16[2mms[22m[39m
- [32m✓[39m src/schemas/registries/issue-registry.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 15[2mms[22m[39m
- [32m✓[39m src/validator/artifact-validator.fixtures.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 24[2mms[22m[39m
- [32m✓[39m src/schemas/registries/milestone-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
- [32m✓[39m src/schemas/registries/shared-registry.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 11[2mms[22m[39m
- [32m✓[39m src/parser/artifact-parser.fixtures.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 27[2mms[22m[39m
- [32m✓[39m src/state/event-order.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 4[2mms[22m[39m
- [32m✓[39m src/state/event-order.fixtures.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 25[2mms[22m[39m
- [32m✓[39m src/constants.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m src/state/state-machine.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/schemas/schemas.compose.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/initiative-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/issue-registry.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m src/validator/artifact-validator.fixtures.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/milestone-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/shared-registry.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m src/parser/artifact-parser.fixtures.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m src/state/event-order.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m src/state/event-order.fixtures.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m src/constants.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/loading/artifact-paths.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 8[2mms[22m[39m
 
-[2m Test Files [22m [1m[32m18 passed[39m[22m[90m (18)[39m
-[2m      Tests [22m [1m[32m200 passed[39m[22m[90m (200)[39m
-[2m   Start at [22m 21:11:17
-[2m   Duration [22m 7.06s[2m (transform 1.99s, setup 0ms, collect 3.28s, tests 361ms, environment 3ms, prepare 184ms)[22m
+[2m Test Files [22m [1m[32m19 passed[39m[22m[90m (19)[39m
+[2m      Tests [22m [1m[32m219 passed[39m[22m[90m (219)[39m
+[2m   Start at [22m 21:32:07
+[2m   Duration [22m 8.58s[2m (transform 2.23s, setup 0ms, collect 3.82s, tests 399ms, environment 4ms, prepare 238ms)[22m
 
 [34m % [39m[2mCoverage report from [22m[33mistanbul[39m
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   97.47 |    88.36 |     100 |      98 |                   
+All files          |   97.49 |    88.23 |     100 |   98.02 |                   
  src               |     100 |      100 |     100 |     100 |                   
   constants.ts     |     100 |      100 |     100 |     100 |                   
  ...mation/cascade |   92.13 |     80.7 |     100 |   91.95 |                   
   engine.ts        |   92.13 |     80.7 |     100 |   91.95 | ...72,185,203,211 
+ src/loading       |     100 |       75 |     100 |     100 |                   
+  ...fact-paths.ts |     100 |       75 |     100 |     100 | 18                
  src/parser        |     100 |      100 |     100 |     100 |                   
   ...act-parser.ts |     100 |      100 |     100 |     100 |                   
  src/schemas       |     100 |      100 |     100 |     100 |                   
