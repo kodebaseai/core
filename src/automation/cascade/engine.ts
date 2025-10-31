@@ -36,7 +36,12 @@ function resolveCascadeTrigger(
   return CASCADE_TRIGGER_BY_EVENT[newState];
 }
 
-export type CascadeChild = Pick<TInitiative | TMilestone | TIssue, "metadata">;
+export type CascadeChild = Pick<
+  TInitiative | TMilestone | TIssue,
+  "metadata"
+> & {
+  id?: string;
+};
 
 export type CascadeDecision =
   | {
@@ -302,4 +307,41 @@ export class CascadeEngine {
       reason: formatRemainingChildren(incompleteCount),
     };
   }
+
+  evaluateParentCancellation(
+    children: ReadonlyArray<CascadeChild>,
+  ): ParentCancellationDecision {
+    const completedChildren: string[] = [];
+
+    for (const child of children) {
+      const state = getLatestState(child);
+      if (state === CArtifactEvent.COMPLETED) {
+        completedChildren.push(child.id ?? "(unknown child)");
+      }
+    }
+
+    if (completedChildren.length === 0) {
+      return { canCancel: true };
+    }
+
+    const childList = completedChildren.join(", ");
+    const reason =
+      `Cannot cancel parent while completed children remain: ${childList}. ` +
+      "Archive the parent or adjust the completed children manually.";
+
+    return {
+      canCancel: false,
+      completedChildren,
+      reason,
+    };
+  }
 }
+export type ParentCancellationDecision =
+  | {
+      canCancel: true;
+    }
+  | {
+      canCancel: false;
+      completedChildren: string[];
+      reason: string;
+    };

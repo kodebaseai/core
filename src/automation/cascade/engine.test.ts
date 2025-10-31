@@ -19,8 +19,12 @@ type EventSequence = {
   metadata?: Record<string, unknown>;
 };
 
-function buildChild(events: readonly EventSequence[]): CascadeChild {
+function buildChild(
+  events: readonly EventSequence[],
+  id?: string,
+): CascadeChild {
   return {
+    id,
     metadata: {
       title: "Child Artifact",
       priority: CPriority.HIGH,
@@ -53,8 +57,12 @@ function sequence(
 
 const engine = new CascadeEngine();
 
-function buildBlockedDependent(dependencyIds: readonly string[]): CascadeChild {
+function buildBlockedDependent(
+  dependencyIds: readonly string[],
+  id?: string,
+): CascadeChild {
   return {
+    id,
     metadata: {
       title: "Dependent Artifact",
       priority: CPriority.MEDIUM,
@@ -279,6 +287,60 @@ describe("CascadeEngine.resolveDependencyCompletion", () => {
     });
 
     expect(dependent).toEqual(snapshot);
+  });
+});
+
+describe("CascadeEngine.evaluateParentCancellation", () => {
+  it("rejects cancellation when completed children exist", () => {
+    const children: CascadeChild[] = [
+      buildChild(
+        [
+          sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+          sequence(CArtifactEvent.COMPLETED, CEventTrigger.PR_MERGED),
+        ],
+        "A.1.1",
+      ),
+      buildChild(
+        [
+          sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+          sequence(CArtifactEvent.IN_PROGRESS, CEventTrigger.BRANCH_CREATED),
+        ],
+        "A.1.2",
+      ),
+    ];
+
+    const decision = engine.evaluateParentCancellation(children);
+
+    expect(decision.canCancel).toBe(false);
+    if (decision.canCancel)
+      throw new Error("expected cancellation to be blocked");
+    expect(decision.completedChildren).toEqual(["A.1.1"]);
+    expect(decision.reason).toMatch(
+      /Archive the parent or adjust the completed children manually/,
+    );
+  });
+
+  it("allows cancellation when no child is completed", () => {
+    const children: CascadeChild[] = [
+      buildChild(
+        [
+          sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+          sequence(CArtifactEvent.CANCELLED, CEventTrigger.MANUAL_CANCEL),
+        ],
+        "A.2.1",
+      ),
+      buildChild(
+        [
+          sequence(CArtifactEvent.DRAFT, CEventTrigger.ARTIFACT_CREATED),
+          sequence(CArtifactEvent.IN_PROGRESS, CEventTrigger.BRANCH_CREATED),
+        ],
+        "A.2.2",
+      ),
+    ];
+
+    const decision = engine.evaluateParentCancellation(children);
+
+    expect(decision.canCancel).toBe(true);
   });
 });
 
