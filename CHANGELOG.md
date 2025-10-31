@@ -1,5 +1,12 @@
 # @kodebase/core
 
+## 0.2.0
+
+### Minor Changes
+
+- [#46](https://github.com/kodebaseai/kodebase/pull/46) [`55db75f`](https://github.com/kodebaseai/kodebase/commit/55db75f28703f1df9e9e77c9b907600be91559e4) Thanks [@migcarva](https://github.com/migcarva)! - Expand the cascade engine with dependency resolution, cancellation guardrails,
+  and documentation updates across the cascade, state, and schema modules. (A.5)
+
 ## 0.1.1
 
 ### Patch Changes
