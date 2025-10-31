@@ -53,6 +53,43 @@ function sequence(
 
 const engine = new CascadeEngine();
 
+function buildBlockedDependent(dependencyIds: readonly string[]): CascadeChild {
+  return {
+    metadata: {
+      title: "Dependent Artifact",
+      priority: CPriority.MEDIUM,
+      estimation: CEstimationSize.S,
+      created_by: BASE_ACTOR,
+      assignee: BASE_ACTOR,
+      schema_version: "0.0.1",
+      relationships: {
+        blocks: [],
+        blocked_by: dependencyIds.slice(),
+      },
+      events: [
+        {
+          event: CArtifactEvent.DRAFT,
+          timestamp: "2025-10-28T10:00:00Z",
+          actor: BASE_ACTOR,
+          trigger: CEventTrigger.ARTIFACT_CREATED,
+        },
+        {
+          event: CArtifactEvent.BLOCKED,
+          timestamp: "2025-10-28T11:00:00Z",
+          actor: BASE_ACTOR,
+          trigger: CEventTrigger.HAS_DEPENDENCIES,
+          metadata: {
+            blocking_dependencies: dependencyIds.map((id) => ({
+              artifact_id: id,
+              resolved: false,
+            })),
+          },
+        },
+      ],
+    },
+  };
+}
+
 describe("CascadeEngine.generateCascadeEvent", () => {
   beforeEach(() => {
     vi.useFakeTimers();
@@ -173,6 +210,75 @@ describe("CascadeEngine.generateCascadeEvent", () => {
       trigger_actor: trigger.actor,
       trigger_timestamp: trigger.timestamp,
     });
+  });
+});
+
+describe("CascadeEngine.resolveDependencyCompletion", () => {
+  it("marks dependency entry as resolved and leaves others pending", () => {
+    const dependent = buildBlockedDependent(["A.1.1", "A.1.2"]);
+
+    const result = engine.resolveDependencyCompletion(dependent, {
+      dependencyId: "A.1.1",
+      resolutionTimestamp: "2025-10-31T20:00:00Z",
+    });
+
+    expect(result.updated).toBe(true);
+    if (!result.updated) throw new Error("expected update");
+    expect(result.readyEventAdded).toBe(false);
+
+    const blocked = result.artifact.metadata.events[1];
+    expect(blocked).toBeDefined();
+    const deps = (blocked?.metadata?.blocking_dependencies ?? []) as Array<
+      Record<string, unknown>
+    >;
+    const first = deps.find((dep) => dep?.artifact_id === "A.1.1");
+    const second = deps.find((dep) => dep?.artifact_id === "A.1.2");
+    expect(first?.resolved).toBe(true);
+    expect(first?.resolved_at).toBe("2025-10-31T20:00:00Z");
+    expect(second?.resolved).toBe(false);
+  });
+
+  it("adds a ready event when all blocking dependencies resolve", () => {
+    const dependent = buildBlockedDependent(["A.2.1", "A.2.2"]);
+
+    const first = engine.resolveDependencyCompletion(dependent, {
+      dependencyId: "A.2.1",
+      resolutionTimestamp: "2025-10-31T20:05:00Z",
+    });
+    if (!first.updated) throw new Error("first resolution should update");
+
+    const second = engine.resolveDependencyCompletion(first.artifact, {
+      dependencyId: "A.2.2",
+      resolutionTimestamp: "2025-10-31T20:10:00Z",
+    });
+
+    expect(second.updated).toBe(true);
+    if (!second.updated) throw new Error("second resolution should update");
+    expect(second.readyEventAdded).toBe(true);
+
+    const events = second.artifact.metadata.events;
+    const readyEvent = events[events.length - 1];
+    expect(readyEvent).toBeDefined();
+    expect(readyEvent?.event).toBe(CArtifactEvent.READY);
+    expect(readyEvent?.trigger).toBe(CEventTrigger.DEPENDENCY_COMPLETED);
+    expect(readyEvent?.actor).toBe("System Cascade (cascade@completion)");
+    expect(readyEvent?.timestamp).toBe("2025-10-31T20:10:00Z");
+    expect(readyEvent?.metadata?.dependencies_resolved).toEqual([
+      "A.2.1",
+      "A.2.2",
+    ]);
+  });
+
+  it("does not mutate the original dependent artifact", () => {
+    const dependent = buildBlockedDependent(["A.3.1"]);
+    const snapshot = JSON.parse(JSON.stringify(dependent));
+
+    engine.resolveDependencyCompletion(dependent, {
+      dependencyId: "A.3.1",
+      resolutionTimestamp: "2025-10-31T20:15:00Z",
+    });
+
+    expect(dependent).toEqual(snapshot);
   });
 });
 

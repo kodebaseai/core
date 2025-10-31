@@ -49,6 +49,21 @@ export type CascadeDecision =
       reason: string;
     };
 
+export type DependencyResolutionResult =
+  | {
+      updated: false;
+      reason:
+        | "blocked_event_missing"
+        | "dependency_not_tracked"
+        | "dependency_already_resolved";
+      artifact: CascadeChild;
+    }
+  | {
+      updated: true;
+      readyEventAdded: boolean;
+      artifact: CascadeChild;
+    };
+
 function isArtifactEvent(value: unknown): value is TArtifactEvent {
   return (
     typeof value === "string" &&
@@ -121,6 +136,108 @@ export class CascadeEngine {
       trigger,
       metadata,
     });
+  }
+
+  resolveDependencyCompletion(
+    dependent: CascadeChild,
+    options: {
+      dependencyId: string;
+      resolutionTimestamp: string;
+      actor?: string;
+    },
+  ): DependencyResolutionResult {
+    const {
+      dependencyId,
+      resolutionTimestamp,
+      actor = CASCADE_SYSTEM_ACTOR,
+    } = options;
+
+    const cloned: CascadeChild = JSON.parse(JSON.stringify(dependent));
+    const events = cloned.metadata.events ?? [];
+
+    let blockedEventIndex = -1;
+    for (let i = events.length - 1; i >= 0; i--) {
+      if (events[i]?.event === CArtifactEvent.BLOCKED) {
+        blockedEventIndex = i;
+        break;
+      }
+    }
+
+    if (blockedEventIndex === -1) {
+      return {
+        updated: false,
+        reason: "blocked_event_missing",
+        artifact: cloned,
+      };
+    }
+
+    const blockedEvent = events[blockedEventIndex];
+    const dependencies = blockedEvent?.metadata?.blocking_dependencies as
+      | Array<Record<string, unknown>>
+      | undefined;
+
+    if (!dependencies || dependencies.length === 0) {
+      return {
+        updated: false,
+        reason: "dependency_not_tracked",
+        artifact: cloned,
+      };
+    }
+
+    const entry = dependencies.find(
+      (dep) => dep?.artifact_id === dependencyId,
+    ) as
+      | (Record<string, unknown> & {
+          artifact_id: string;
+          resolved?: boolean;
+          resolved_at?: string;
+        })
+      | undefined;
+
+    if (!entry) {
+      return {
+        updated: false,
+        reason: "dependency_not_tracked",
+        artifact: cloned,
+      };
+    }
+
+    if (entry.resolved) {
+      return {
+        updated: false,
+        reason: "dependency_already_resolved",
+        artifact: cloned,
+      };
+    }
+
+    entry.resolved = true;
+    entry.resolved_at = resolutionTimestamp;
+
+    const allResolved = dependencies.every((dep) => dep?.resolved === true);
+    let readyEventAdded = false;
+
+    if (allResolved) {
+      const resolvedIds = dependencies
+        .map((dep) => dep?.artifact_id)
+        .filter((id): id is string => typeof id === "string");
+      const readyEvent = createEvent({
+        event: CArtifactEvent.READY,
+        actor,
+        trigger: CEventTrigger.DEPENDENCY_COMPLETED,
+        timestamp: resolutionTimestamp,
+        metadata: {
+          dependencies_resolved: resolvedIds,
+        },
+      });
+      events.push(readyEvent);
+      readyEventAdded = true;
+    }
+
+    return {
+      updated: true,
+      readyEventAdded,
+      artifact: cloned,
+    };
   }
 
   shouldCascadeToParent(
