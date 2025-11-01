@@ -9,22 +9,23 @@ Update your dependencies and make sure the versions match.[39m
 [1m[46m RUN [49m[22m [36mv4.0.5 [39m[90m/home/runner/work/kodebase/kodebase/packages/core[39m
       [2mCoverage enabled with [22m[33mistanbul[39m
 
- [32m✓[39m src/automation/cascade/engine.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 20[2mms[22m[39m
- [32m✓[39m src/validator/artifact-validator.test.ts [2m([22m[2m34 tests[22m[2m)[22m[32m 51[2mms[22m[39m
- [32m✓[39m src/validator/error-formatter.test.ts [2m([22m[2m29 tests[22m[2m)[22m[32m 24[2mms[22m[39m
- [32m✓[39m src/parser/artifact-parser.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 43[2mms[22m[39m
- [32m✓[39m src/validator/dependency-validator.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 18[2mms[22m[39m
- [32m✓[39m src/schemas/registries/metadata-registry.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 16[2mms[22m[39m
- [32m✓[39m src/state/event-builder.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 11[2mms[22m[39m
- [32m✓[39m src/state/state-machine.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
- [32m✓[39m src/schemas/schemas.compose.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
- [32m✓[39m src/schemas/registries/initiative-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m src/automation/cascade/engine.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m src/validator/artifact-validator.test.ts [2m([22m[2m34 tests[22m[2m)[22m[32m 165[2mms[22m[39m
+ [32m✓[39m src/validator/error-formatter.test.ts [2m([22m[2m29 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m src/parser/artifact-parser.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m src/wizard/artifact-layout.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m src/validator/dependency-validator.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/metadata-registry.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/state/event-builder.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/state/state-machine.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/schemas/schemas.compose.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/initiative-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 14[2mms[22m[39m
  [32m✓[39m src/schemas/registries/issue-registry.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 10[2mms[22m[39m
- [32m✓[39m src/validator/artifact-validator.fixtures.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 27[2mms[22m[39m
- [32m✓[39m src/loading/loading.integration.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 35[2mms[22m[39m
- [32m✓[39m src/schemas/registries/milestone-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/validator/artifact-validator.fixtures.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m src/loading/loading.integration.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m src/schemas/registries/milestone-registry.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
  [32m✓[39m src/schemas/registries/shared-registry.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 13[2mms[22m[39m
- [32m✓[39m src/parser/artifact-parser.fixtures.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m src/parser/artifact-parser.fixtures.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 28[2mms[22m[39m
  [32m✓[39m src/state/event-order.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 4[2mms[22m[39m
  [32m✓[39m src/state/event-order.fixtures.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 25[2mms[22m[39m
  [32m✓[39m src/loading/artifact-loader.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
@@ -32,16 +33,16 @@ Update your dependencies and make sure the versions match.[39m
  [32m✓[39m src/constants.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
  [32m✓[39m src/loading/artifact-paths.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 5[2mms[22m[39m
 
-[2m Test Files [22m [1m[32m22 passed[39m[22m[90m (22)[39m
-[2m      Tests [22m [1m[32m229 passed[39m[22m[90m (229)[39m
-[2m   Start at [22m 11:51:28
-[2m   Duration [22m 8.56s[2m (transform 2.20s, setup 0ms, collect 3.81s, tests 409ms, environment 4ms, prepare 241ms)[22m
+[2m Test Files [22m [1m[32m23 passed[39m[22m[90m (23)[39m
+[2m      Tests [22m [1m[32m248 passed[39m[22m[90m (248)[39m
+[2m   Start at [22m 17:32:12
+[2m   Duration [22m 8.10s[2m (transform 2.49s, setup 0ms, collect 3.91s, tests 533ms, environment 4ms, prepare 209ms)[22m
 
 [34m % [39m[2mCoverage report from [22m[33mistanbul[39m
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   97.61 |    88.55 |     100 |   98.11 |                   
+All files          |   97.26 |    88.06 |     100 |   97.72 |                   
  src               |     100 |      100 |     100 |     100 |                   
   constants.ts     |     100 |      100 |     100 |     100 |                   
  ...mation/cascade |   92.13 |     80.7 |     100 |   91.95 |                   
@@ -70,4 +71,6 @@ All files          |   97.61 |    88.55 |     100 |   98.11 |
   ...-validator.ts |   99.24 |    94.44 |     100 |   99.23 | 406               
   ...-validator.ts |   95.83 |    93.18 |     100 |   95.83 | 194,213,252-257   
   ...-formatter.ts |     100 |    84.28 |     100 |     100 | ...54-263,305-310 
+ src/wizard        |      92 |    79.16 |     100 |      92 |                   
+  ...act-layout.ts |      92 |    79.16 |     100 |      92 | 103,112,137,146   
 -------------------|---------|----------|---------|---------|-------------------
