@@ -1,0 +1,14 @@
+metadata:
+  title: "Cascade Initiative"
+  priority: high
+  estimation: L
+  created_by: "Miguel Carvalho (m@kodebase.ai)"
+  assignee: "Miguel Carvalho (m@kodebase.ai)"
+  schema_version: "0.1.0"
+  events:
+    - event: ready
+      timestamp: "2025-10-28T10:00:00Z"
+      actor: "Miguel Carvalho (m@kodebase.ai)"
+      trigger: artifact_created
+content:
+  summary: "Top-level workstream for cascade enhancements."

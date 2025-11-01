@@ -9,3 +9,6 @@ Helper functions for working with artifact file paths live here.
   on ID segments. Tests mock the filesystem to exercise discovery rules.
 - `artifact-file-service.ts` – `readArtifact`/`writeArtifact` wrap YAML
   read/write with stable formatting and contextual error messages.
+- `loading.integration.test.ts` – integration coverage that walks the fixture
+  tree, validates type filters, confirms read/write idempotency, and asserts
+  parse errors bubble up with file context.

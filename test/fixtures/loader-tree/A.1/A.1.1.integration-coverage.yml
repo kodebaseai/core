@@ -1,0 +1,17 @@
+metadata:
+  title: "Integration Coverage"
+  priority: medium
+  estimation: S
+  created_by: "Miguel Carvalho (m@kodebase.ai)"
+  assignee: "Miguel Carvalho (m@kodebase.ai)"
+  schema_version: "0.1.0"
+  events:
+    - event: completed
+      timestamp: "2025-10-30T17:30:00Z"
+      actor: "Miguel Carvalho (m@kodebase.ai)"
+      trigger: pr_merged
+content:
+  summary: "Ensure cascades are exercised through integration suites."
+  acceptance_criteria:
+    - "Create fixture-driven coverage"
+    - "Assert deterministic outputs"

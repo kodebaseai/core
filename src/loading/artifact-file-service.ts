@@ -5,7 +5,13 @@ import yaml from "yaml";
 export async function readArtifact<T = unknown>(filePath: string): Promise<T> {
   try {
     const content = await fs.readFile(filePath, "utf8");
-    return yaml.parse(content) as T;
+    try {
+      return yaml.parse(content) as T;
+    } catch (parseError) {
+      throw new Error(
+        `Failed to parse artifact at ${filePath}: ${(parseError as Error).message}`,
+      );
+    }
   } catch (error) {
     throw new Error(
       `Failed to read artifact at ${filePath}: ${(error as Error).message}`,

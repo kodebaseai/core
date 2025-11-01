@@ -1,0 +1,14 @@
+metadata:
+  title: "Discovery Improvements"
+  priority: medium
+  estimation: S
+  created_by: "Miguel Carvalho (m@kodebase.ai)"
+  assignee: "Miguel Carvalho (m@kodebase.ai)"
+  schema_version: "0.1.0"
+  events:
+    - event: in_review
+      timestamp: "2025-10-30T12:00:00Z"
+      actor: "Miguel Carvalho (m@kodebase.ai)"
+      trigger: pr_created
+content:
+  summary: "Milestone focusing on type filters and discovery tweaks."

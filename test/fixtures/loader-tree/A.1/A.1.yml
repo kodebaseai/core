@@ -1,0 +1,17 @@
+metadata:
+  title: "Milestone One"
+  priority: high
+  estimation: M
+  created_by: "Miguel Carvalho (m@kodebase.ai)"
+  assignee: "Miguel Carvalho (m@kodebase.ai)"
+  schema_version: "0.1.0"
+  relationships:
+    blocked_by: []
+    blocks: []
+  events:
+    - event: in_progress
+      timestamp: "2025-10-29T09:00:00Z"
+      actor: "Miguel Carvalho (m@kodebase.ai)"
+      trigger: branch_created
+content:
+  summary: "First milestone containing foundational issues."

@@ -1,0 +1,14 @@
+metadata:
+  title: "Loader Initiative"
+  priority: medium
+  estimation: M
+  created_by: "Miguel Carvalho (m@kodebase.ai)"
+  assignee: "Miguel Carvalho (m@kodebase.ai)"
+  schema_version: "0.1.0"
+  events:
+    - event: ready
+      timestamp: "2025-10-29T08:00:00Z"
+      actor: "Miguel Carvalho (m@kodebase.ai)"
+      trigger: artifact_created
+content:
+  summary: "Workstream for loader and file service hardening."

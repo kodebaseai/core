@@ -1,0 +1,14 @@
+metadata:
+  title: "Maintenance Sweep"
+  priority: low
+  estimation: XS
+  created_by: "Miguel Carvalho (m@kodebase.ai)"
+  assignee: "Miguel Carvalho (m@kodebase.ai)"
+  schema_version: "0.1.0"
+  events:
+    - event: ready
+      timestamp: "2025-10-31T09:30:00Z"
+      actor: "Miguel Carvalho (m@kodebase.ai)"
+      trigger: dependencies_met
+content:
+  summary: "Routine loader maintenance work."
