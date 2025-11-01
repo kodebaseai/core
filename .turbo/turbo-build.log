@@ -1,5 +1,5 @@
 
-> @kodebase/core@0.2.0 build /home/runner/work/kodebase/kodebase/packages/core
+> @kodebase/core@0.3.0 build /home/runner/work/kodebase/kodebase/packages/core
 > echo 'no build step'
 
 no build step

@@ -1,5 +1,12 @@
 # @kodebase/core
 
+## 0.3.0
+
+### Minor Changes
+
+- [#52](https://github.com/kodebaseai/kodebase/pull/52) [`f8c6446`](https://github.com/kodebaseai/kodebase/commit/f8c64461637aed624ba84cdbdfd479ea5888eb80) Thanks [@migcarva](https://github.com/migcarva)! - Add loader and file I/O stack with slug-tolerant ID extraction, recursive artifact
+  discovery, type filters, and stable YAML read/write operations. (A.6)
+
 ## 0.2.0
 
 ### Minor Changes
