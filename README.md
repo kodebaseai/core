@@ -34,6 +34,13 @@ yarn add @kodebase/core
   and `StateTransitionError`) for artifact lifecycle transitions. Includes the
   event builder (`createEvent`, `createDraftEvent`, `createReadyEvent`) which
   requires an explicit `trigger` and emits ISO UTC timestamps.
+- `src/automation/cascade` &mdash; upward-only cascade engine for parent progression
+  (`shouldCascadeToParent`, `generateCascadeEvent`) plus dependency resolution and
+  cancellation guardrails.
+- `src/loading` &mdash; artifact discovery and file I/O utilities. Includes slug-tolerant
+  ID extraction (`getArtifactIdFromPath`), recursive discovery (`loadAllArtifactPaths`,
+  `loadArtifactsByType`), and stable YAML read/write (`readArtifact`, `writeArtifact`)
+  with formatting options that prevent spurious diffs.
 - `src/test-utils` &mdash; shared helpers (for example, fixture loaders) used
   across the parser and validator suites.
 
@@ -79,6 +86,19 @@ const draft = createDraftEvent("Ada Lovelace (ada@example.com)");
 if (canTransition(CArtifact.ISSUE, draft.event, CArtifactEvent.READY)) {
   assertTransition(CArtifact.ISSUE, draft.event, CArtifactEvent.READY);
 }
+
+// Discover and load artifacts from the file system
+import {
+  loadAllArtifactPaths,
+  loadArtifactsByType,
+  readArtifact,
+  writeArtifact,
+} from "@kodebase/core";
+
+const paths = await loadAllArtifactPaths(".kodebase/artifacts");
+const initiatives = loadArtifactsByType(paths, "initiative");
+const artifact = await readArtifact(paths[0]);
+await writeArtifact("path/to/artifact.yml", artifact);
 ```
 
 ## Running the tests
